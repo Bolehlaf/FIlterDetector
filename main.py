@@ -2,8 +2,8 @@ import cv2 as cv
 import numpy as np
 
 
-k_size = (30, 30)
-filter_threshold = 90
+k_size = (35, 35)
+filter_threshold = 100
 hole_threshold = 130
 hole_area_multiplication = 10
 
@@ -14,7 +14,7 @@ def find_filter_contours(image):
     gauss = cv.blur(grayscale, k_size)
 
     ret, thresh = cv.threshold(gauss, filter_threshold, 255, 0)
-    contours, hierarchy = cv.findContours(thresh, cv.RETR_TREE, cv.CHAIN_APPROX_SIMPLE)
+    contours, hierarchy = cv.findContours(thresh, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
 
     return contours
 
@@ -47,10 +47,10 @@ def draw_rectangles(image, contours):
 
 
 if __name__ == '__main__':
-    input_image = cv.imread('input/3.jpg')
+    input_image = cv.imread('input/4.jpg')
     contours_output = find_filter_contours(input_image)
 
     find_large_hole(input_image)
     draw_rectangles(input_image, contours_output)
 
-    cv.imwrite("output/output_3.png", input_image)
+    cv.imwrite("output/output_4.png", input_image)
